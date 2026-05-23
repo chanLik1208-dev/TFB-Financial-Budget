@@ -2,10 +2,14 @@
 import { ref, inject, onMounted, reactive } from "vue";
 import SplitLayout from "../../layouts/SplitLayout.vue";
 import { api, type RecordDto } from "../../api";
+import { user } from "../../auth";
 
 // 排版比例由伺服器 ui-config 注入；fallback [3,1]（左列表、右寫入）。
 const uiConfig = inject<any>("uiConfig");
 const ratio = (uiConfig?.layout?.records?.ratio ?? [3, 1]) as [number, number];
+
+// 新記錄預設帶入使用者的顯示貨幣。
+const defaultCurrency = () => user.value?.displayCurrency ?? "HKD";
 
 const rows = ref<RecordDto[]>([]);
 const editingId = ref<number | null>(null);
@@ -28,7 +32,7 @@ const form = reactive({
   name: "",
   type: "食物",
   amount: "" as string,
-  currency: "HKD",
+  currency: defaultCurrency(),
   noteOn: false,
   note: "",
 });
@@ -45,6 +49,7 @@ function resetForm() {
   form.name = "";
   form.type = "食物";
   form.amount = "";
+  form.currency = defaultCurrency();
   form.note = "";
   form.noteOn = false;
 }
