@@ -1,0 +1,19 @@
+# 反向代理:終止 TLS，自動申請 + 續期 Let's Encrypt 憑證。
+# Node 應用只監聽內部 HTTP，TLS 與應用解耦。
+# 部署時把網域改成實際值即可；本機開發用 127.0.0.1 段。
+
+finance.example.com {
+	encode gzip
+
+	# 後端 API
+	handle /api/* {
+		reverse_proxy 127.0.0.1:3000
+	}
+
+	# 前端 PWA（靜態檔，由 vite build 產出）
+	handle {
+		root * ./client/dist
+		try_files {path} /index.html
+		file_server
+	}
+}

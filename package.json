@@ -1,0 +1,16 @@
+{
+  "name": "finance-manager",
+  "private": true,
+  "version": "0.1.0",
+  "description": "多用戶財政管理器 — 管理儲備與消耗、快速檢查財政損耗",
+  "license": "MIT",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev:server": "npm run dev --workspace server",
+    "dev:client": "npm run dev --workspace client",
+    "build": "npm run build --workspace server && npm run build --workspace client"
+  }
+}

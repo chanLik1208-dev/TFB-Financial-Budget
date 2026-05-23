@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1779537064140,
+      "tag": "0000_large_meteorite",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1779553776134,
+      "tag": "0001_slow_chronomancer",
+      "breakpoints": true
+    }
+  ]
+}
