@@ -61,14 +61,11 @@ onMounted(async () => {
         <div class="chart">
           <DonutChart v-if="breakdown" :data="breakdown" />
         </div>
-        <div class="indicator-wrap">
-          <HealthIndicator
-            :level="status.level"
-            :message="status.message"
-            :details="status.details"
-          />
-          <span class="indicator-label">{{ status.message }}</span>
-        </div>
+        <HealthIndicator
+          :level="status.level"
+          :message="status.message"
+          :details="status.details"
+        />
       </div>
 
       <!-- 近期記錄移到圓形圖旁邊 -->
@@ -111,10 +108,8 @@ onMounted(async () => {
 .hero { display: grid; grid-template-columns: minmax(320px, 380px) 1fr; gap: 24px; align-items: stretch; }
 @media (max-width: 800px) { .hero { grid-template-columns: 1fr; } }
 
-.hero-left { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 24px; }
+.hero-left { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 20px; }
 .chart { display: grid; place-items: center; }
-.indicator-wrap { display: flex; align-items: center; gap: 14px; }
-.indicator-label { font-size: 15px; font-weight: 600; }
 
 .recent { padding: 24px; }
 .recent h3 { margin-bottom: 16px; font-size: 18px; }

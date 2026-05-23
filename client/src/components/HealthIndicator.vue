@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-// 財務健康指示器：圓形燈號 + 一句話。點擊展開成橢圓 + 邊緣漸變羽化。
+// 財務健康指示器：圓潤膠囊（狀態點 + 說明），點擊展開支出明細。
 const props = defineProps<{
   level: "ok" | "warn" | "bad" | "none";
   message: string;
@@ -19,41 +19,51 @@ const ringVar = `var(--c-${props.level === "none" ? "muted" : props.level})`;
     :style="{ '--ring': ringVar }"
     @click="expanded = !expanded"
   >
-    <template v-if="!expanded">
+    <div class="head">
       <span class="dot" />
       <span class="msg">{{ message }}</span>
-    </template>
-    <template v-else>
-      <div class="detail">
-        <strong>支出明細</strong>
-        <ul>
-          <li v-for="d in details" :key="d.label">{{ d.label }}：{{ d.text }}</li>
-        </ul>
+      <span class="chev" :class="{ open: expanded }">⌄</span>
+    </div>
+    <div class="detail" v-if="expanded">
+      <div class="row" v-for="d in details" :key="d.label">
+        <span class="d-label">{{ d.label }}</span>
+        <span class="d-text">{{ d.text }}</span>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .indicator {
-  display: flex; align-items: center; gap: 10px;
-  width: 64px; height: 64px; border-radius: 50%;
-  padding: 0; justify-content: center; cursor: pointer; overflow: hidden;
-  box-shadow: 0 0 24px 2px var(--ring);
-  transition: width .4s cubic-bezier(.22,1,.36,1), height .4s, border-radius .4s, padding .4s;
+  cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 18px;
+  width: 100%;
+  transition: background .25s ease;
 }
-/* 展開：高度隨內容自適應，避免文字被裁切；邊緣用環色柔光取代會切字的遮罩 */
-.indicator.expanded {
-  width: 300px; height: auto; min-height: 120px;
-  border-radius: 32px; padding: 18px 22px;
-  align-items: flex-start; justify-content: flex-start;
-  overflow: visible;
-  box-shadow: 0 0 36px 4px var(--ring), inset 0 0 0 1px rgba(255,255,255,.22);
+.indicator:hover { background: var(--c-glassBg); filter: brightness(1.05); }
+
+.head { display: flex; align-items: center; gap: 12px; }
+.dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--ring);
+  /* 柔和光環取代刺眼陰影 */
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ring) 28%, transparent);
+  flex-shrink: 0;
+  animation: breathe 2.4s ease-in-out infinite;
 }
-.dot { width: 18px; height: 18px; border-radius: 50%; background: var(--ring); }
-.msg { display: none; }
-.detail { animation: fade .4s ease; width: 100%; }
-.detail strong { display: block; margin-bottom: 8px; font-size: 15px; }
-.detail ul { list-style: none; font-size: 14px; line-height: 1.8; }
-@keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; } }
+.msg { font-weight: 600; font-size: 15px; flex: 1; }
+.chev { color: var(--c-muted); transition: transform .3s ease; }
+.chev.open { transform: rotate(180deg); }
+
+.detail { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(128,128,128,.2); animation: fade .3s ease; }
+.row { display: flex; justify-content: space-between; gap: 16px; padding: 5px 0; font-size: 14px; }
+.d-label { color: var(--c-muted); }
+.d-text { font-variant-numeric: tabular-nums; }
+
+@keyframes breathe {
+  0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--ring) 28%, transparent); }
+  50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--ring) 12%, transparent); }
+}
+@keyframes fade { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 </style>

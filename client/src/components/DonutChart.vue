@@ -20,23 +20,28 @@ function render() {
   const { items, currency, total } = props.data;
   const textColor = cssVar("--c-text"); // 跟隨主題，避免淺色主題上白字看不見
   const mutedColor = cssVar("--c-muted");
+  // 千分位顯示；金額越長字級越小，並限制寬度自動換行，避免超出內圈。
+  const amountStr = total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const vFont = amountStr.length > 12 ? 16 : amountStr.length > 9 ? 19 : 24;
   chart.setOption({
     color: themeColors(),
     tooltip: { trigger: "item", formatter: `{b}: ${currency} {c} ({d}%)` },
     series: [
       {
         type: "pie",
-        radius: ["54%", "80%"],
+        radius: ["60%", "82%"],
         center: ["50%", "50%"],
         avoidLabelOverlap: true,
         itemStyle: { borderRadius: 8, borderWidth: 3, borderColor: "transparent" },
         label: {
           show: true,
           position: "center",
-          formatter: () => `{t|本期支出}\n{v|${currency} ${total.toFixed(2)}}`,
+          // 標題 / 貨幣 / 金額 各自一行，金額過長時於內圈寬度內自動換行
+          formatter: () => `{t|本期支出}\n{c|${currency}}\n{v|${amountStr}}`,
           rich: {
-            t: { fontSize: 14, color: mutedColor, padding: [0, 0, 8, 0] },
-            v: { fontSize: 24, fontWeight: "bold", color: textColor },
+            t: { fontSize: 13, color: mutedColor, padding: [0, 0, 4, 0] },
+            c: { fontSize: 13, color: mutedColor, padding: [0, 0, 4, 0] },
+            v: { fontSize: vFont, fontWeight: "bold", color: textColor, width: 130, overflow: "break", lineHeight: vFont + 4, align: "center" },
           },
         },
         labelLine: { show: false },
