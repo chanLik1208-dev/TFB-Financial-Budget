@@ -1,4 +1,6 @@
 import type { Record } from "../repositories/types.js";
+import { expandDailyRecords } from "./expandRecords.js";
+export { thisMonthRange } from "./overview.js";
 
 export interface Breakdown {
   currency: string;
@@ -15,7 +17,10 @@ export function computeBreakdown(
   displayCurrency: string,
   convert: Convert,
 ): Breakdown {
-  const inRange = records.filter((r) => r.createdAt >= range.start && r.createdAt < range.end);
+  const inRange = expandDailyRecords(
+    records.filter((r) => r.createdAt >= range.start && r.createdAt < range.end),
+    range,
+  );
   const byType = new Map<string, number>();
   let totalCents = 0;
   for (const r of inRange) {

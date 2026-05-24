@@ -48,8 +48,8 @@ async function submit() {
 .card { display: flex; flex-direction: column; gap: 12px; padding: 28px; width: 320px; max-width: 100%; }
 .card h2 { text-align: center; }
 .card input { padding: 10px; border: none; border-radius: 12px; font: inherit; }
-.primary { padding: 11px; border: none; border-radius: 12px; background: var(--c-primary); color: #fff; cursor: pointer; }
+.primary { padding: 11px; border: none; border-radius: 12px; background: var(--accent); color: #fff; cursor: pointer; }
 .primary:disabled { opacity: .6; cursor: default; }
-.switch { background: transparent; border: none; color: var(--c-text); opacity: .8; cursor: pointer; }
-.err { color: var(--c-bad); font-size: 14px; }
+.switch { background: transparent; border: none; color: var(--t-primary); opacity: .8; cursor: pointer; }
+.err { color: var(--c-red); font-size: 14px; }
 </style>

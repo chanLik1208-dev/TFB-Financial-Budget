@@ -50,11 +50,11 @@ onMounted(async () => {
 
 <template>
   <div class="overview">
-    <header class="bar">
-      <select class="glass period" v-model="period" @change="loadPeriodData">
+    <Teleport to="#nav-slot">
+      <select class="period" v-model="period" @change="loadPeriodData">
         <option v-for="p in periods" :key="p.key" :value="p.key">{{ p.label }}</option>
       </select>
-    </header>
+    </Teleport>
 
     <div class="hero" v-if="status">
       <div class="hero-left glass">
@@ -84,13 +84,13 @@ onMounted(async () => {
     </div>
     <p v-else-if="loading" class="loading">載入中…</p>
 
-    <!-- 原近期記錄的位置：改放預計下月開支（訂閱） -->
+    <!-- 原近期記錄的位置：改放預計下月開支（訂閱・交通・飲食） -->
     <div class="projected glass" v-if="projected">
       <div class="proj-head">
-        <h3>預計下月開支（訂閱）</h3>
+        <h3>預計下月開支（訂閱・交通・飲食）</h3>
         <strong class="proj-total">{{ projected.currency }} {{ projected.total.toFixed(2) }}</strong>
       </div>
-      <p v-if="!projected.items.length" class="empty">本月無訂閱記錄，無法預估</p>
+      <p v-if="!projected.items.length" class="empty">本月無訂閱或交通記錄，無法預估</p>
       <div v-for="(i, idx) in projected.items" :key="idx" class="prow">
         <span>{{ i.name }}</span>
         <span class="pamt">{{ projected.currency }} {{ i.amount.toFixed(2) }}</span>
@@ -101,7 +101,7 @@ onMounted(async () => {
 
 <style scoped>
 .overview { display: flex; flex-direction: column; gap: 24px; }
-.period { padding: 10px 16px; border: none; color: var(--c-text); font-size: 15px; }
+.period { padding: 5px 10px; border: none; border-radius: var(--r-sm); background: var(--glass-bg-input); color: var(--t-primary); font-size: 13px; cursor: pointer; }
 .loading { padding: 24px; }
 
 /* 圓形圖區與近期記錄並排，窄螢幕自動換行堆疊 */
@@ -113,25 +113,25 @@ onMounted(async () => {
 
 .recent { padding: 24px; }
 .recent h3 { margin-bottom: 16px; font-size: 18px; }
-.empty { color: var(--c-muted); }
+.empty { color: var(--t-secondary); }
 .rrow {
   display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 14px; align-items: center;
   padding: 12px 0; border-bottom: 1px solid rgba(128,128,128,.18);
 }
 .rrow:last-child { border-bottom: none; }
 .rname { font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.rtype { color: var(--c-muted); font-size: 14px; white-space: nowrap; }
-.ramt { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
-.orig { color: var(--c-muted); font-size: 12px; }
+.rtype { color: var(--t-secondary); font-size: 14px; white-space: nowrap; }
+.ramt { font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace; text-align: right; white-space: nowrap; }
+.orig { color: var(--t-secondary); font-size: 12px; }
 
 .projected { padding: 24px; }
 .proj-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; gap: 12px; flex-wrap: wrap; }
 .proj-head h3 { font-size: 18px; }
-.proj-total { font-size: 22px; font-weight: 700; color: var(--c-primary); }
+.proj-total { font-size: 22px; font-weight: 700; color: var(--accent); }
 .prow {
   display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;
   padding: 12px 0; border-bottom: 1px solid rgba(128,128,128,.18);
 }
 .prow:last-child { border-bottom: none; }
-.prow .pamt { font-variant-numeric: tabular-nums; }
+.prow .pamt { font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace; }
 </style>

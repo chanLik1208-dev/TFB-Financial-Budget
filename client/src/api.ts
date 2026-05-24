@@ -10,6 +10,8 @@ export interface RecordDto {
   displayAmount: number; // 換算為顯示貨幣後的金額
   displayCurrency: string;
   note: string | null;
+  interval: string | null;
+  restriction: string | null;
   createdAt: number;
 }
 
@@ -68,7 +70,7 @@ export const api = {
     return request<RecordDto[]>(`/api/records${qs ? `?${qs}` : ""}`);
   },
 
-  createRecord: (body: { name: string; type: string; amount: number; currency: string; note?: string | null }) =>
+  createRecord: (body: { name: string; type: string; amount: number; currency: string; note?: string | null; interval?: string | null; restriction?: string | null }) =>
     request<RecordDto>("/api/records", { method: "POST", body: JSON.stringify(body) }),
 
   updateRecord: (id: number, patch: Partial<RecordDto>) =>
@@ -99,6 +101,7 @@ export interface Settings {
   displayCurrency: string;
   theme: string;
   monthlyBudget: number | null;
+  budgetCurrency: string | null;
   notificationsEnabled: boolean;
   notifyCooldownMin: number;
 }

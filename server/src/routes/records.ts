@@ -17,6 +17,8 @@ const toDto = (r: Record, displayCurrency: string, convert: Convert) => ({
   displayAmount: convert(r.amount, r.currency, displayCurrency) / 100,
   displayCurrency,
   note: r.note,
+  interval: r.interval,
+  restriction: r.restriction,
   createdAt: r.createdAt,
 });
 
@@ -26,6 +28,8 @@ interface Body {
   amount: number;
   currency: string;
   note?: string | null;
+  interval?: string | null;
+  restriction?: string | null;
 }
 
 function validate(b: Partial<Body>): string | null {
@@ -33,6 +37,8 @@ function validate(b: Partial<Body>): string | null {
   if (!b.type?.trim()) return "type 必填";
   if (typeof b.amount !== "number" || !isFinite(b.amount) || b.amount < 0) return "amount 無效";
   if (!b.currency?.trim()) return "currency 必填";
+  if (b.interval !== undefined && b.interval !== null && !["monthly", "yearly", "weekly", "daily"].includes(b.interval)) return "interval 無效";
+  if (b.restriction !== undefined && b.restriction !== null && !["workdays", "weekends"].includes(b.restriction)) return "restriction 無效";
   return null;
 }
 
@@ -91,6 +97,8 @@ export async function recordRoutes(app: FastifyInstance) {
       amount: Math.round(b.amount * 100),
       currency: b.currency.trim(),
       note: b.note?.trim() || null,
+      interval: ["服務(訂閱)", "交通", "飲食"].includes(b.type.trim()) ? (b.interval ?? "monthly") : null,
+      restriction: ["交通", "飲食"].includes(b.type.trim()) ? (b.restriction ?? null) : null,
       createdAt: Date.now(),
     });
     return reply.code(201).send(toDto(created, user.displayCurrency, makeConverter(rateMap)));
@@ -109,6 +117,9 @@ export async function recordRoutes(app: FastifyInstance) {
     }
     if (b.currency !== undefined) patch.currency = b.currency.trim();
     if (b.note !== undefined) patch.note = b.note?.trim() || null;
+    const t = (b.type ?? rec.type).trim();
+    if (b.interval !== undefined) patch.interval = ["服務(訂閱)", "交通", "飲食"].includes(t) ? (b.interval ?? "monthly") : null;
+    if (b.restriction !== undefined) patch.restriction = ["交通", "飲食"].includes(t) ? (b.restriction ?? null) : null;
     await repos.records.update(rec.id, patch);
     return reply.code(204).send();
   });

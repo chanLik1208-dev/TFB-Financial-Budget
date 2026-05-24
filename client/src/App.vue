@@ -41,7 +41,7 @@ function openSettings() {
 async function boot() {
   try {
     if (!user.value) user.value = await api.me();
-    applyTheme(user.value?.theme ?? "sakura");
+    applyTheme(user.value?.theme ?? "default");
     const res = await fetch("/api/ui-config");
     const cfg: UiConfig = await res.json();
     cfg.tabs.sort((a, b) => a.order - b.order);
@@ -63,12 +63,12 @@ watch(token, (t) => {
   } else {
     config.value = null;
     activeComponent.value = null;
-    applyTheme("sakura");
+    applyTheme("default");
   }
 });
 
 onMounted(async () => {
-  applyTheme("sakura");
+  applyTheme("default");
   if (token.value) await boot(); // 還原既有 session（重新整理）
   ready.value = true;
 });
@@ -86,7 +86,9 @@ onMounted(async () => {
           :class="{ active: activeTab === t.id }"
           @click="activeTab = t.id"
         >{{ t.label }}</button>
+        <button :class="{ active: activeTab === '' && activeComponent }" @click="openSettings">設定</button>
         <span class="spacer" />
+        <span id="nav-slot" />
         <span class="who">{{ user?.username }}</span>
         <button class="logout" @click="logout">登出</button>
       </nav>
@@ -94,8 +96,6 @@ onMounted(async () => {
       <main class="content">
         <component :is="activeComponent" v-if="activeComponent" />
       </main>
-
-      <button class="settings glass" title="設定" @click="openSettings">⚙</button>
     </div>
 
     <div class="booting" v-else>載入中…</div>
@@ -103,14 +103,12 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.app { max-width: 1100px; margin: 0 auto; padding: 16px; min-height: 100vh; }
+.app { padding: 16px; min-height: 100vh; }
 .booting { min-height: 100vh; display: grid; place-items: center; }
 .tabs { display: flex; gap: 8px; padding: 8px; margin-bottom: 20px; align-items: center; }
-.tabs button { border: none; background: transparent; padding: 8px 18px; border-radius: 14px; color: var(--c-text); cursor: pointer; }
-.tabs button.active { background: var(--c-primary); color: #fff; }
+.tabs button { border: none; background: transparent; padding: 8px 18px; border-radius: 14px; color: var(--t-primary); cursor: pointer; }
+.tabs button.active { background: var(--accent); color: #fff; }
 .spacer { flex: 1; }
 .who { opacity: .8; font-size: 14px; }
 .logout { font-size: 14px; }
-.content { padding: 8px 0; }
-.settings { position: fixed; right: 20px; bottom: 20px; width: 56px; height: 56px; border-radius: 50%; border: none; font-size: 22px; cursor: pointer; }
-</style>
+.content { padding: 8px 0; }</style>

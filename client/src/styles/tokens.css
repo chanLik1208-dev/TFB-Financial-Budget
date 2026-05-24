@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;650;700;750;800&display=swap');
+
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+
+  --text-xs:   clamp(9px,  0.80vw, 10.5px);
+  --text-sm:   clamp(10px, 0.90vw, 11.5px);
+  --text-base: clamp(12px, 1.10vw, 13px);
+  --text-md:   clamp(12px, 1.20vw, 13.5px);
+  --text-lg:   clamp(13px, 1.30vw, 16px);
+  --text-xl:   clamp(14px, 1.50vw, 17px);
+  --text-2xl:  clamp(15px, 1.50vw, 19px);
+  --text-3xl:  clamp(18px, 2.00vw, 24px);
+  --text-display: clamp(24px, 3.4vw, 40px);
+
+  --fw-regular: 400; --fw-medium: 500; --fw-semibold: 600; --fw-bold: 700; --fw-extrabold: 800;
+  --lh-tight: 1.2; --lh-normal: 1.5;
+  --tracking-tight: -0.02em;
+
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 20px; --sp-6: 24px; --sp-7: 28px; --sp-8: 32px;
+
+  --r-xs: 6px; --r-sm: 10px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px; --r-full: 9999px;
+
+  --blur-xs: blur(6px); --blur-sm: blur(12px); --blur-md: blur(20px); --blur-lg: blur(36px);
+
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light mode (default) */
+:root, :root.light, body.light {
+  --wp-start: #c8edf5;
+  --wp-mid:   #d4f0f8;
+  --wp-end:   #e8f8fc;
+
+  --glass-bg:        rgba(255, 255, 255, 0.45);
+  --glass-bg-hover:  rgba(255, 255, 255, 0.60);
+  --glass-bg-active: rgba(255, 255, 255, 0.70);
+  --glass-bg-input:  rgba(255, 255, 255, 0.55);
+
+  --surface-bg:        rgba(255, 255, 255, 0.78);
+  --surface-bg-hover:  rgba(255, 255, 255, 0.92);
+
+  --glass-specular:   rgba(255, 255, 255, 0.80);
+  --glass-specular-b: rgba(255, 255, 255, 0.20);
+
+  --glass-border:      rgba(255, 255, 255, 0.70);
+  --glass-border-soft: rgba(255, 255, 255, 0.40);
+  --glass-border-dim:  rgba(0, 0, 0, 0.06);
+
+  --accent:        #00ACD7;
+  --accent-2:      #5DC9E2;
+  --accent-glow:   rgba(0, 172, 215, 0.35);
+  --accent-subtle: rgba(0, 172, 215, 0.13);
+  --accent-border: rgba(0, 172, 215, 0.40);
+
+  --c-green:  #30D182;
+  --c-red:    #FF453A;
+  --c-yellow: #FFD60A;
+  --c-blue:   #0A84FF;
+
+  --tint-success: rgba(48,  209, 130, 0.14);
+  --tint-danger:  rgba(255,  80,  80, 0.14);
+  --tint-warning: rgba(255, 190,  60, 0.14);
+
+  --t-primary:   rgba(0, 0, 0, 0.88);
+  --t-secondary: rgba(0, 0, 0, 0.52);
+  --t-tertiary:  rgba(0, 0, 0, 0.32);
+  --t-inverse:   rgba(255, 255, 255, 0.96);
+
+  --sh-sm:    0 1px 4px rgba(0, 0, 0, 0.08), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+  --sh-md:    0 4px 16px rgba(0, 0, 0, 0.10), 0 1px 4px rgba(0, 0, 0, 0.06);
+  --sh-lg:    0 12px 40px rgba(0, 0, 0, 0.13), 0 2px 8px rgba(0, 0, 0, 0.07);
+  --sh-glass: 0 8px 32px rgba(0, 0, 0, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.80);
+  --inner-shine: inset 0 1px 0 var(--glass-specular), inset 0 -1px 0 var(--glass-specular-b);
+}
+
+/* Dark mode */
+:root.dark, body.dark, .dark {
+  --wp-start: #071418;
+  --wp-mid:   #09181e;
+  --wp-end:   #0c1f26;
+
+  --glass-bg:        rgba(255, 255, 255, 0.06);
+  --glass-bg-hover:  rgba(255, 255, 255, 0.10);
+  --glass-bg-active: rgba(255, 255, 255, 0.14);
+  --glass-bg-input:  rgba(255, 255, 255, 0.08);
+
+  --surface-bg:        rgba(20, 45, 60, 0.80);
+  --surface-bg-hover:  rgba(28, 58, 78, 0.90);
+
+  --glass-specular:   rgba(255, 255, 255, 0.12);
+  --glass-specular-b: rgba(0, 0, 0, 0.30);
+
+  --glass-border:      rgba(255, 255, 255, 0.12);
+  --glass-border-soft: rgba(255, 255, 255, 0.07);
+  --glass-border-dim:  rgba(255, 255, 255, 0.04);
+
+  --accent:        #00ACD7;
+  --accent-2:      #5DC9E2;
+  --accent-glow:   rgba(0, 172, 215, 0.40);
+  --accent-subtle: rgba(0, 172, 215, 0.15);
+  --accent-border: rgba(0, 172, 215, 0.38);
+
+  --c-green:  #30D182;
+  --c-red:    #FF6B6B;
+  --c-yellow: #FFD60A;
+  --c-blue:   #4DA6FF;
+
+  --tint-success: rgba(48,  209, 130, 0.10);
+  --tint-danger:  rgba(255,  80,  80, 0.10);
+  --tint-warning: rgba(255, 190,  60, 0.12);
+
+  --t-primary:   rgba(255, 255, 255, 0.92);
+  --t-secondary: rgba(255, 255, 255, 0.55);
+  --t-tertiary:  rgba(255, 255, 255, 0.28);
+  --t-inverse:   rgba(0, 0, 0, 0.90);
+
+  --sh-sm:    0 1px 4px rgba(0, 0, 0, 0.40);
+  --sh-md:    0 4px 16px rgba(0, 0, 0, 0.50);
+  --sh-lg:    0 12px 40px rgba(0, 0, 0, 0.55);
+  --sh-glass: 0 8px 32px rgba(0, 0, 0, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  --inner-shine: inset 0 1px 0 rgba(255, 255, 255, 0.12), inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not(body.light) {
+    --wp-start: #071418; --wp-mid: #09181e; --wp-end: #0c1f26;
+    --glass-bg: rgba(255,255,255,0.06); --glass-bg-hover: rgba(255,255,255,0.10);
+    --glass-bg-active: rgba(255,255,255,0.14); --glass-bg-input: rgba(255,255,255,0.08);
+    --surface-bg: rgba(20,45,60,0.80); --surface-bg-hover: rgba(28,58,78,0.90);
+    --glass-specular: rgba(255,255,255,0.12); --glass-specular-b: rgba(0,0,0,0.30);
+    --glass-border: rgba(255,255,255,0.12); --glass-border-soft: rgba(255,255,255,0.07); --glass-border-dim: rgba(255,255,255,0.04);
+    --accent: #00ACD7; --accent-2: #5DC9E2; --accent-glow: rgba(0,172,215,0.40); --accent-subtle: rgba(0,172,215,0.15); --accent-border: rgba(0,172,215,0.38);
+    --c-green: #30D182; --c-red: #FF6B6B; --c-yellow: #FFD60A; --c-blue: #4DA6FF;
+    --tint-success: rgba(48,209,130,0.10); --tint-danger: rgba(255,80,80,0.10); --tint-warning: rgba(255,190,60,0.12);
+    --t-primary: rgba(255,255,255,0.92); --t-secondary: rgba(255,255,255,0.55); --t-tertiary: rgba(255,255,255,0.28); --t-inverse: rgba(0,0,0,0.90);
+    --sh-sm: 0 1px 4px rgba(0,0,0,0.40); --sh-md: 0 4px 16px rgba(0,0,0,0.50); --sh-lg: 0 12px 40px rgba(0,0,0,0.55);
+    --sh-glass: 0 8px 32px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.10);
+    --inner-shine: inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.25);
+  }
+}
+
+/* Semantic aliases */
+:root {
+  --fg1: var(--t-primary);
+  --fg2: var(--t-secondary);
+  --fg3: var(--t-tertiary);
+  --fg-inverse: var(--t-inverse);
+  --fg-accent: var(--accent);
+  --bg-canvas: linear-gradient(135deg, var(--wp-start), var(--wp-mid) 50%, var(--wp-end));
+  --bg-card: var(--glass-bg);
+  --bg-card-hover: var(--glass-bg-hover);
+  --bg-input: var(--glass-bg-input);
+  --border: var(--glass-border);
+  --border-soft: var(--glass-border-soft);
+  --sidebar-w: clamp(260px, 28vw, 340px);
+}

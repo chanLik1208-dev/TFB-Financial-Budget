@@ -19,6 +19,8 @@ export interface Record {
   amount: number; // 最小單位(分)
   currency: string;
   note: string | null;
+  interval: string | null; // 服務(訂閱): monthly|yearly / 交通: monthly|weekly|daily
+  restriction: string | null; // 交通: workdays | weekends
   createdAt: number;
 }
 
