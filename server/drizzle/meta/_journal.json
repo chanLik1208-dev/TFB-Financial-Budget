@@ -15,6 +15,20 @@
       "when": 1779553776134,
       "tag": "0001_slow_chronomancer",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1779635961366,
+      "tag": "0002_slimy_molecule_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1779642763015,
+      "tag": "0003_slim_dark_beast",
+      "breakpoints": true
     }
   ]
 }

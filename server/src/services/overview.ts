@@ -1,4 +1,12 @@
 import type { Record, Budget } from "../repositories/types.js";
+import { expandDailyRecords } from "./expandRecords.js";
+
+export function thisMonthRange(): { start: number; end: number } {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+  const end = new Date(now.getFullYear(), now.getMonth() + 1, 1).getTime();
+  return { start, end };
+}
 
 export type StatusLevel = "ok" | "warn" | "bad" | "none";
 
@@ -23,9 +31,11 @@ export function computeStatus(
   displayCurrency: string,
   convert: Convert,
 ): OverviewStatus {
-  const now = new Date();
-  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
-  const monthRecords = records.filter((r) => r.createdAt >= monthStart);
+  const { start: monthStart, end: monthEnd } = thisMonthRange();
+  const monthRecords = expandDailyRecords(
+    records.filter((r) => r.createdAt >= monthStart),
+    { start: monthStart, end: monthEnd },
+  );
 
   // 每筆換算為顯示貨幣（分）。
   const inDisplay = (r: Record) => convert(r.amount, r.currency, displayCurrency);

@@ -1,30 +1,21 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
-// 財務健康指示器：圓潤膠囊（狀態點 + 說明），點擊展開支出明細。
 const props = defineProps<{
   level: "ok" | "warn" | "bad" | "none";
   message: string;
   details?: { label: string; text: string }[];
 }>();
 
-const expanded = ref(false);
-const ringVar = `var(--c-${props.level === "none" ? "muted" : props.level})`;
+const levelMap: Record<string, string> = { ok: "var(--c-green)", warn: "var(--c-yellow)", bad: "var(--c-red)", none: "var(--t-secondary)" };
+const ringVar = levelMap[props.level] ?? "var(--t-secondary)";
 </script>
 
 <template>
-  <div
-    class="indicator glass"
-    :class="{ expanded }"
-    :style="{ '--ring': ringVar }"
-    @click="expanded = !expanded"
-  >
+  <div class="indicator glass" :style="{ '--ring': ringVar }">
     <div class="head">
       <span class="dot" />
       <span class="msg">{{ message }}</span>
-      <span class="chev" :class="{ open: expanded }">⌄</span>
     </div>
-    <div class="detail" v-if="expanded">
+    <div class="detail" v-if="details?.length">
       <div class="row" v-for="d in details" :key="d.label">
         <span class="d-label">{{ d.label }}</span>
         <span class="d-text">{{ d.text }}</span>
@@ -35,13 +26,10 @@ const ringVar = `var(--c-${props.level === "none" ? "muted" : props.level})`;
 
 <style scoped>
 .indicator {
-  cursor: pointer;
   padding: 12px 16px;
   border-radius: 18px;
   width: 100%;
-  transition: background .25s ease;
 }
-.indicator:hover { background: var(--c-glassBg); filter: brightness(1.05); }
 
 .head { display: flex; align-items: center; gap: 12px; }
 .dot {
@@ -53,13 +41,10 @@ const ringVar = `var(--c-${props.level === "none" ? "muted" : props.level})`;
   animation: breathe 2.4s ease-in-out infinite;
 }
 .msg { font-weight: 600; font-size: 15px; flex: 1; }
-.chev { color: var(--c-muted); transition: transform .3s ease; }
-.chev.open { transform: rotate(180deg); }
-
 .detail { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(128,128,128,.2); animation: fade .3s ease; }
 .row { display: flex; justify-content: space-between; gap: 16px; padding: 5px 0; font-size: 14px; }
-.d-label { color: var(--c-muted); }
-.d-text { font-variant-numeric: tabular-nums; }
+.d-label { color: var(--t-secondary); }
+.d-text { font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace; }
 
 @keyframes breathe {
   0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--ring) 28%, transparent); }

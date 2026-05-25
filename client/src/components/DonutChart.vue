@@ -12,14 +12,14 @@ function cssVar(n: string): string {
   return getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 }
 function themeColors(): string[] {
-  return ["--c-primary", "--c-accent", "--c-ok", "--c-warn", "--c-bad", "--c-muted"].map(cssVar);
+  return ["--accent", "--accent-2", "--c-green", "--c-yellow", "--c-red", "--t-secondary"].map(cssVar);
 }
 
 function render() {
   if (!chart) return;
   const { items, currency, total } = props.data;
-  const textColor = cssVar("--c-text"); // 跟隨主題，避免淺色主題上白字看不見
-  const mutedColor = cssVar("--c-muted");
+  const textColor = cssVar("--t-primary");
+  const mutedColor = cssVar("--t-secondary");
   // 千分位顯示；金額越長字級越小，並限制寬度自動換行，避免超出內圈。
   const amountStr = total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const vFont = amountStr.length > 12 ? 16 : amountStr.length > 9 ? 19 : 24;

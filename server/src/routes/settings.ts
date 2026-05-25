@@ -15,6 +15,7 @@ export async function settingsRoutes(app: FastifyInstance) {
       displayCurrency: user.displayCurrency,
       theme: user.theme,
       monthlyBudget: monthly ? monthly.limitAmount / 100 : null,
+      budgetCurrency: monthly ? monthly.currency : null,
       notificationsEnabled: kv.get("notificationsEnabled") === "true",
       notifyCooldownMin: Number(kv.get("notifyCooldownMin") ?? "60"),
     };

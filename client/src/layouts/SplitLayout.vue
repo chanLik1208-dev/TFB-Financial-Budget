@@ -4,7 +4,7 @@ const props = defineProps<{ ratio: [number, number] }>();
 </script>
 
 <template>
-  <div class="split" :style="{ gridTemplateColumns: `${props.ratio[0]}fr ${props.ratio[1]}fr` }">
+  <div class="split" :style="{ gridTemplateColumns: `1fr 280px` }">
     <div class="split-left"><slot name="left" /></div>
     <div class="split-right"><slot name="right" /></div>
   </div>

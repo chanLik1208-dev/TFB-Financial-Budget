@@ -24,6 +24,8 @@ export const records = sqliteTable("records", {
   amount: integer("amount").notNull(), // 最小單位(分)
   currency: text("currency").notNull(),
   note: text("note"),
+  interval: text("interval"), // 服務(訂閱): monthly|yearly / 交通: monthly|weekly|daily
+  restriction: text("restriction"), // 交通: workdays | weekends
   createdAt: integer("created_at").notNull(),
 });
 
